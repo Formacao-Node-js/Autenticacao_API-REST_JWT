@@ -4,7 +4,8 @@ const connection = require("../database");
 const User = connection.define("users", {
   id: {
     type: Sequelize.UUID,
-    autoIncrement: true,
+    defaultValue: Sequelize.UUIDV4,
+    // autoIncrement: true,
     allowNull: false,
     primaryKey: true,
   },
