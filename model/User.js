@@ -20,14 +20,14 @@ const User = connection.define("users", {
     allowNull: false,
   },
 
-  user: {
+  username: {
     type: Sequelize.STRING(20),
     allowNull: false,
   },
 });
 
 User.sync({ force: false }).then(() => {
-  console.log('Tabela "Usuário" criar');
+  console.log('Tabela "Usuário" criada');
 });
 
 module.exports = User;
