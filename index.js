@@ -6,6 +6,7 @@ const app = express();
 
 /* ### Model ###  */
 const Uuser = require("./model/User");
+const User = require("./model/User");
 
 /* ### Data Base ### */
 connection.authenticate().then(() => {
@@ -21,7 +22,7 @@ app.use(json());
 app.use(cors());
 
 /* ### ROUTES ###  */
-app.post("/cadastro", async (req, res) => {
+app.post("/save", async (req, res) => {
   const { username, email, password } = req.body;
 
   const reqFields = ["username", "email", "password"];
@@ -44,4 +45,12 @@ app.post("/cadastro", async (req, res) => {
   res.status(201).json({
     status: "Usário cadastrado",
   });
+});
+
+app.get("/findall", async (req, res) => {
+  const response = await User.findAll({
+    order: [["createdAt", "DESC"]],
+  });
+
+  res.send(response);
 });
