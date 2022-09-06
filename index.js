@@ -2,10 +2,10 @@ const { json } = require("express");
 const express = require("express");
 const cors = require("cors");
 const connection = require("./database");
+const { status_200, status_400, status_404 } = require("./status_server");
 const app = express();
 
 /* ### Model ###  */
-const Uuser = require("./model/User");
 const User = require("./model/User");
 
 /* ### Data Base ### */
@@ -33,15 +33,13 @@ app.post("/save", async (req, res) => {
     }
   }
 
-  await Uuser.create({
+  await User.create({
     username: username,
     password: password,
     email: email,
   });
 
-  res.status(201).json({
-    status: "Usário cadastrado",
-  });
+  res.status(200).json(status_200[0]);
 });
 
 app.get("/findall", async (req, res) => {
@@ -53,7 +51,7 @@ app.get("/findall", async (req, res) => {
 });
 
 app.get("/findone/:id", async (req, res) => {
-  const id = req.params.id;
+  var id = req.params.id;
 
   const response = await User.findOne({
     where: { id },
@@ -64,14 +62,31 @@ app.get("/findone/:id", async (req, res) => {
   res.status(404).json({ status_404 });
 });
 
-/* ### STATUS HTTP ### */
+app.put("/update/:id", async (req, res) => {
+  var id = req.params.id;
 
-const status_400 = {
-  err: "O id passado é do tipo texto.",
-  Payload: "O id deve conter apenas número(s).",
-};
+  const response = await User.findOne({
+    where: { id },
+  });
 
-const status_404 = {
-  err: "O id inserido não foi encontrado.",
-  Payload: "Insira um id válido para a busca.",
-};
+  if (response != undefined) {
+    const { username, email, password } = req.body;
+
+    if (username != undefined) {
+      response.username = username;
+      await response.save();
+    }
+    if (email != undefined) {
+      response.email = email;
+      await response.save();
+    }
+    if (password != undefined) {
+      response.password = password;
+      await response.save();
+    }
+  } else {
+    return res.status(404).json({ status_404 });
+  }
+
+  res.status(200).json(status_200[1]);
+});
