@@ -51,7 +51,7 @@ app.get("/findall", async (req, res) => {
 });
 
 app.get("/findone/:id", async (req, res) => {
-  var id = req.params.id;
+  const id = req.params.id;
 
   const response = await User.findOne({
     where: { id },
@@ -63,7 +63,7 @@ app.get("/findone/:id", async (req, res) => {
 });
 
 app.put("/update/:id", async (req, res) => {
-  var id = req.params.id;
+  const id = req.params.id;
 
   const response = await User.findOne({
     where: { id },
@@ -89,4 +89,22 @@ app.put("/update/:id", async (req, res) => {
   }
 
   res.status(200).json(status_200[1]);
+});
+
+app.delete("/delete/:id", async (req, res) => {
+  const id = req.params.id;
+
+  const response = await User.findOne({
+    where: { id },
+  });
+
+  if (response != undefined) {
+    await User.destroy({
+      where: { id },
+    });
+
+    return res.status(200).json(status_200[2]);
+  }
+
+  return res.status(404).json({ status_404 });
 });

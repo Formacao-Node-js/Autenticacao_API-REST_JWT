@@ -9,6 +9,11 @@ const status_200 = [
       payload: "Usuário atualizado com sucesso.",
     },
   ],
+  [
+    {
+      payload: "Usário deletado com sucesso.",
+    },
+  ],
 ];
 
 const status_400 = {
@@ -21,8 +26,4 @@ const status_404 = {
   Payload: "Insira um id válido para a busca.",
 };
 
-const status_203 = {
-  oi: "oi",
-};
-
-module.exports = { status_200, status_400, status_404, status_203 };
+module.exports = { status_200, status_400, status_404 };
