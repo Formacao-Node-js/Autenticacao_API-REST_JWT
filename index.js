@@ -10,6 +10,7 @@ const {
   status_400,
   status_401,
   status_404,
+  status_500,
 } = require("./status_server");
 
 const app = express();
@@ -119,7 +120,6 @@ app.delete("/delete/:id", async (req, res) => {
 });
 
 /* ### AUTHENTICATION USER ### */
-
 app.post("/auth", async (req, res) => {
   var { email, password } = req.body;
 
@@ -136,9 +136,9 @@ app.post("/auth", async (req, res) => {
       },
       (err, token) => {
         if (err) {
-          res.status(500).json({ err: "erro de servidor" });
+          res.status(500).json({ status_500 });
         } else {
-          res.status(202).json({ Token: token });
+          res.status(200).json({ Token: token });
         }
       }
     );

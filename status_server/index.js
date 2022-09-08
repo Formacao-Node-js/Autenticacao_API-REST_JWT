@@ -1,34 +1,39 @@
 const status_200 = [
   [
     {
-      Payload: "Usuario criado com sucesso.",
+      payload: "Usuario criado com sucesso.",
     },
   ],
   [
     {
-      Payload: "Usuário atualizado com sucesso.",
+      payload: "Usuário atualizado com sucesso.",
     },
   ],
   [
     {
-      Payload: "Usário deletado com sucesso.",
+      payload: "Usário deletado com sucesso.",
     },
   ],
 ];
 
 const status_400 = {
-  Err: "O id passado é do tipo texto.",
-  Payload: "O id deve conter apenas número(s).",
+  err: "O id passado é do tipo texto.",
+  payload: "O id deve conter apenas número(s).",
 };
 
 const status_401 = {
-  Err: "O email ou senha não encontrado no sistema.",
-  Payload: "Tente novamente com as credencias corretas.",
+  err: "O email ou senha não encontrado no sistema.",
+  payload: "Tente novamente com as credencias corretas.",
 };
 
 const status_404 = {
-  Err: "O id inserido não foi encontrado.",
-  Payload: "Insira um id válido para a busca.",
+  err: "O id inserido não foi encontrado.",
+  payload: "Insira um id válido para a busca.",
 };
 
-module.exports = { status_200, status_400, status_401, status_404 };
+const status_500 = {
+  err: "Houve uma falha interna no servidor.",
+  payload: "Tente novamente",
+};
+
+module.exports = { status_200, status_400, status_401, status_404, status_500 };
