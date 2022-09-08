@@ -3,18 +3,81 @@
 ## Endpoints
 
 ### Porta:
+
 ```
 localhost:2632
 ```
+
+### POST /auth
+
+Endpoint primordial, utilizado para fazer o login no sistema, sem passar por ele você será incapaz de fazer qualquer outra requisição.
+
+#### Parâmertos
+
+email: e-mail do usuário cadastrado no sistema.
+password: senha do usuário cadastrado no sistema
+
+exemplo:
+
+```
+{
+    "email": "vini@javascript.com",
+    "password": "1234"
+}
+```
+
+#### Respostas do servidor
+
+##### ° OK! 200.
+
+exemplo:
+
+```
+{
+    "Token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InZpbmlAamF2YXNjcmlwdC5jb20iLCJpZCI6IjIyMjlmOTVhLTljMTktNDkzOS05NDhjLWRkYmQ2OGZkNTMxMyIsImlhdCI6MTY2MjY3NDU2NSwiZXhwIjoxNjYyODQ3MzY1fQ.mMkk65CWUBT-T0bxXlTajBuXTVsqhqQG7DN5VKF-kJk"
+}
+```
+
+##### ° Não autorizado! 401.
+
+exemplo:
+
+```
+[
+    {
+        "err": "O email ou senha não encontrado no sistema.",
+        "payload": "Tente novamente com as credencias corretas."
+    }
+]
+```
+
+##### ° Erro interno do servidor! 500.
+
+exemplo:
+
+```
+{
+    "status_500": {
+        err: "Houve uma falha interna no servidor.",
+        payload: "Tente novamente",
+    }
+}
+```
+
 ### GET /findall
+
 Endpoint responsável por buscar todos os usuários cadastrados no banco de dados
 
 #### Parâmetros
+
 Nenhum.
 
 #### Respostas do servidor
+
 ##### ° OK! 200.
+
 exemplo:
+
 ```
 {
     "author": {
@@ -65,8 +128,11 @@ exemplo:
     ]
 }
 ```
+
 ##### ° Não autorizado! 401
+
 exemplo:
+
 ```
 {
     "err": "Não autorizado",
@@ -74,17 +140,20 @@ exemplo:
 }
 ```
 
-
 ### GET /findone/:id
+
 Endpoint responsável por trazer um determinado usuário pelo o ID.
 
 #### Parâmetros
+
 ID do usuário
 
 #### Resposta do Servidor
 
 ##### ° OK! 200.
+
 exemplo:
+
 ```
 {
     "author": {
@@ -105,16 +174,20 @@ exemplo:
 ```
 
 ##### ° Não autorizado! 401.
+
 exemplo:
+
 ```
 {
     "err": "Não autorizado",
     "payload": "utilize um token de acesso válido"
 }
-``` 
+```
 
 ##### °Não encontrado! 404.
+
 exemplo:
+
 ```
 {
     "status_404": {

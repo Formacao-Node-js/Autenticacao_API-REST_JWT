@@ -22,14 +22,18 @@ const status_400 = {
 };
 
 const status_401 = [
-  {
-    err: "O email ou senha não encontrado no sistema.",
-    payload: "Tente novamente com as credencias corretas.",
-  },
-  {
-    err: "Não autorizado",
-    payload: "utilize um token de acesso válido",
-  },
+  [
+    {
+      err: "O email ou senha não encontrado no sistema.",
+      payload: "Tente novamente com as credencias corretas.",
+    },
+  ],
+  [
+    {
+      err: "Não autorizado",
+      payload: "utilize um token de acesso válido",
+    },
+  ],
 ];
 
 const status_404 = {
