@@ -2,7 +2,14 @@ const { json } = require("express");
 const express = require("express");
 const cors = require("cors");
 const connection = require("./database");
-const { status_200, status_400, status_404 } = require("./status_server");
+
+const {
+  status_200,
+  status_400,
+  status_401,
+  status_404,
+} = require("./status_server");
+
 const app = express();
 
 /* ### Model ###  */
@@ -107,4 +114,20 @@ app.delete("/delete/:id", async (req, res) => {
   }
 
   return res.status(404).json({ status_404 });
+});
+
+/* ### AUTHENTICATION USER ### */
+
+app.post("/auth", async (req, res) => {
+  var { email, password } = req.body;
+
+  const response = await User.findOne({
+    where: { email: email, password: password },
+  });
+
+  if (response != undefined) {
+    res.status(200).json({ Token: "* TOKEN FALSO *" });
+  } else {
+    res.status(401).json({ status_401 });
+  }
 });
