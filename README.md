@@ -1,4 +1,4 @@
-# API / CRUD completo com JWT e Middleware
+# API de Usuários / CRUD completo com JWT e Middleware
 
 ## Endpoints
 
