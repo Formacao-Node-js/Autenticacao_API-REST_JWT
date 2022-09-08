@@ -23,7 +23,7 @@ const status_400 = {
 
 const status_401 = {
   Err: "O email ou senha não encontrado no sistema.",
-  Payload: "Tente novamente com as credências corretas.",
+  Payload: "Tente novamente com as credencias corretas.",
 };
 
 const status_404 = {
