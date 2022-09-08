@@ -21,10 +21,16 @@ const status_400 = {
   payload: "O id deve conter apenas número(s).",
 };
 
-const status_401 = {
-  err: "O email ou senha não encontrado no sistema.",
-  payload: "Tente novamente com as credencias corretas.",
-};
+const status_401 = [
+  {
+    err: "O email ou senha não encontrado no sistema.",
+    payload: "Tente novamente com as credencias corretas.",
+  },
+  {
+    err: "Não autorizado",
+    payload: "utilize um token de acesso válido",
+  },
+];
 
 const status_404 = {
   err: "O id inserido não foi encontrado.",

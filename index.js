@@ -4,6 +4,7 @@ const cors = require("cors");
 const connection = require("./database");
 const jwt = require("jsonwebtoken");
 const JWTKey = "$2a$12$43FwZJXCAT9I.IHYa3R4OuyfpPHRk6VKvoKTTvT4qMBrsLbvWyCTa";
+const userAuth = require("./middlewares");
 
 const {
   status_200,
@@ -52,15 +53,16 @@ app.post("/save", async (req, res) => {
   res.status(200).json(status_200[0]);
 });
 
-app.get("/findall", async (req, res) => {
+app.get("/findall", userAuth, async (req, res) => {
+  req.loggedUser;
   const response = await User.findAll({
     order: [["createdAt", "DESC"]],
   });
 
-  res.send(response);
+  res.status(200).json({ user: req.loggedUser, response: response });
 });
 
-app.get("/findone/:id", async (req, res) => {
+app.get("/findone/:id", userAuth, async (req, res) => {
   const id = req.params.id;
 
   const response = await User.findOne({
@@ -101,7 +103,7 @@ app.put("/update/:id", async (req, res) => {
   res.status(200).json(status_200[1]);
 });
 
-app.delete("/delete/:id", async (req, res) => {
+app.delete("/delete/:id", userAuth, async (req, res) => {
   const id = req.params.id;
 
   const response = await User.findOne({
@@ -129,7 +131,7 @@ app.post("/auth", async (req, res) => {
 
   if (response != undefined) {
     jwt.sign(
-      { email: User.email, id: User.id },
+      { email: response.email, id: response.id },
       JWTKey,
       {
         expiresIn: "48hrs",
@@ -143,6 +145,6 @@ app.post("/auth", async (req, res) => {
       }
     );
   } else {
-    res.status(401).json({ status_401 });
+    res.status(401).json(status_401[0]);
   }
 });
