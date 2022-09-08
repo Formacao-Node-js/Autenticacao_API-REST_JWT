@@ -2,6 +2,8 @@ const { json } = require("express");
 const express = require("express");
 const cors = require("cors");
 const connection = require("./database");
+const jwt = require("jsonwebtoken");
+const JWTKey = "$2a$12$43FwZJXCAT9I.IHYa3R4OuyfpPHRk6VKvoKTTvT4qMBrsLbvWyCTa";
 
 const {
   status_200,
@@ -126,7 +128,20 @@ app.post("/auth", async (req, res) => {
   });
 
   if (response != undefined) {
-    res.status(200).json({ Token: "* TOKEN FALSO *" });
+    jwt.sign(
+      { email: User.email, id: User.id },
+      JWTKey,
+      {
+        expiresIn: "48hrs",
+      },
+      (err, token) => {
+        if (err) {
+          res.status(500).json({ err: "erro de servidor" });
+        } else {
+          res.status(202).json({ Token: token });
+        }
+      }
+    );
   } else {
     res.status(401).json({ status_401 });
   }
