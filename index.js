@@ -59,7 +59,7 @@ app.get("/findall", userAuth, async (req, res) => {
     order: [["createdAt", "DESC"]],
   });
 
-  res.status(200).json({ user: req.loggedUser, response: response });
+  res.status(200).json({ author: req.loggedUser, response: response });
 });
 
 app.get("/findone/:id", userAuth, async (req, res) => {
@@ -69,7 +69,7 @@ app.get("/findone/:id", userAuth, async (req, res) => {
     where: { id },
   });
   if (response != undefined) {
-    return res.send(response);
+    return res.status(200).json({ author: req.loggedUser, response: response });
   }
   res.status(404).json({ status_404 });
 });
@@ -100,7 +100,7 @@ app.put("/update/:id", async (req, res) => {
     return res.status(404).json({ status_404 });
   }
 
-  res.status(200).json(status_200[1]);
+  res.status(200).json({ author: req.loggedUser }, status_200[1]);
 });
 
 app.delete("/delete/:id", userAuth, async (req, res) => {
@@ -115,7 +115,7 @@ app.delete("/delete/:id", userAuth, async (req, res) => {
       where: { id },
     });
 
-    return res.status(200).json(status_200[2]);
+    return res.status(200).json({ author: req.loggedUser }, status_200[2]);
   }
 
   return res.status(404).json({ status_404 });
