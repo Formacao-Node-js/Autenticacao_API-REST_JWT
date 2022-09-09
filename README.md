@@ -81,49 +81,25 @@ exemplo:
 ```
 {
     "author": {
-        "id": "2229f95a-9c19-4939-948c-ddbd68fd5313",
+        "id": "b3151e10-68a1-4bbb-8408-d4f739d9cd59",
         "email": "vini@javascript.com"
     },
     "response": [
         {
-            "id": "8e5b9a36-a231-4926-a99b-dd31b75200bf",
-            "email": "kyua@javascript.com",
-            "password": "123",
-            "username": "Kyua Kizuguchi",
-            "createdAt": "2022-09-08T20:02:19.000Z",
-            "updatedAt": "2022-09-08T20:02:19.000Z"
-        },
-        {
-            "id": "ad6b2fa9-a6b4-463e-9691-1e369cbd1859",
-            "email": "kyua@javascript.com",
-            "password": "123",
-            "username": "Kyua Kizuguchi",
-            "createdAt": "2022-09-08T17:41:25.000Z",
-            "updatedAt": "2022-09-08T17:41:25.000Z"
-        },
-        {
-            "id": "bed8a40a-6301-457b-a1b3-a63a1fdb2d69",
-            "email": "kyula@javascript.com",
-            "password": "123",
-            "username": "Kyula Zobal",
-            "createdAt": "2022-09-08T17:40:19.000Z",
-            "updatedAt": "2022-09-08T17:40:19.000Z"
-        },
-        {
-            "id": "6c6ce246-1e26-43d2-bcde-8f5621b57801",
-            "email": "kyulla@javascript.com",
-            "password": "123",
-            "username": "Kyulla Eliotrope",
-            "createdAt": "2022-09-08T17:40:05.000Z",
-            "updatedAt": "2022-09-08T17:40:05.000Z"
-        },
-        {
-            "id": "2229f95a-9c19-4939-948c-ddbd68fd5313",
+            "id": "b3151e10-68a1-4bbb-8408-d4f739d9cd59",
             "email": "vini@javascript.com",
-            "password": "1234",
-            "username": "Vinícius S. Pinto",
-            "createdAt": "2022-09-05T23:25:20.000Z",
-            "updatedAt": "2022-09-06T20:34:21.000Z"
+            "password": "$2a$10$2aZatid13v517xzZ1pICu.k/EMV0yuSxFFst0saOg5bJL2wERt3LO",
+            "username": "Vinicius Soares",
+            "createdAt": "2022-09-09T15:09:47.000Z",
+            "updatedAt": "2022-09-09T15:09:47.000Z"
+        },
+        {
+            "id": "c27cac9b-2b82-45b6-9a72-51457e2b46ae",
+            "email": "bill@javascript.com",
+            "password": "$2a$10$.w.vq09UDBkubp.2CP2lXO4VDQeWiS3nLzL7NXSGsCaQXgBw1Z1W.",
+            "username": "Bill Notorious",
+            "createdAt": "2022-09-09T02:38:28.000Z",
+            "updatedAt": "2022-09-09T02:38:28.000Z"
         }
     ]
 }
@@ -157,19 +133,17 @@ exemplo:
 ```
 {
     "author": {
-        "id": "2229f95a-9c19-4939-948c-ddbd68fd5313",
+        "id": "b3151e10-68a1-4bbb-8408-d4f739d9cd59",
         "email": "vini@javascript.com"
     },
-    "response": [
-        {
-            "id": "2229f95a-9c19-4939-948c-ddbd68fd5313",
-            "email": "vini@javascript.com",
-            "password": "1234",
-            "username": "Vinícius S. Pinto",
-            "createdAt": "2022-09-05T23:25:20.000Z",
-            "updatedAt": "2022-09-06T20:34:21.000Z"
-        }
-    ]
+    "response": {
+        "id": "b3151e10-68a1-4bbb-8408-d4f739d9cd59",
+        "email": "vini@javascript.com",
+        "password": "$2a$10$2aZatid13v517xzZ1pICu.k/EMV0yuSxFFst0saOg5bJL2wERt3LO",
+        "username": "Vinicius Soares",
+        "createdAt": "2022-09-09T15:09:47.000Z",
+        "updatedAt": "2022-09-09T15:09:47.000Z"
+    }
 }
 ```
 
