@@ -2,6 +2,7 @@ const { json } = require("express");
 const express = require("express");
 const cors = require("cors");
 const connection = require("./database");
+const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const JWTKey = "$2a$12$43FwZJXCAT9I.IHYa3R4OuyfpPHRk6VKvoKTTvT4qMBrsLbvWyCTa";
 const userAuth = require("./middlewares");
