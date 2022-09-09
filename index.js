@@ -41,7 +41,7 @@ app.post("/save", async (req, res) => {
 
   for (const field of reqFields) {
     if (!req.body[field]) {
-      return res.status(400).json(status_400[1]);
+      return res.status(400).json({ teste: status_400[1] });
     }
   }
 
@@ -56,7 +56,13 @@ app.post("/save", async (req, res) => {
   }).catch((err) => {
     res.status(400).json({ erro: err });
   });
-  res.status(200).json(status_200[0]);
+  var HATEOAS = {
+    href: "http://localhost:2632/auth",
+    rel: "auth_user",
+    type: "POST",
+  };
+
+  res.status(200).json({ server: status_200[0], _link: HATEOAS });
 });
 
 app.get("/findall", userAuth, async (req, res) => {
@@ -69,19 +75,38 @@ app.get("/findall", userAuth, async (req, res) => {
 });
 
 app.get("/findone/:id", userAuth, async (req, res) => {
-  const id = req.params.id;
+  var id = req.params.id;
 
   const response = await User.findOne({
     where: { id },
   });
   if (response != undefined) {
-    return res.status(200).json({ author: req.loggedUser, response: response });
+    var HATEOAS = [
+      {
+        href: "http://localhost:2632/findall",
+        rel: "get_all_user",
+        type: "GET",
+      },
+      {
+        href: "http://localhost:2632/update/" + id,
+        rel: "update_self_user",
+        type: "PUT",
+      },
+      {
+        href: "http://localhost:2632/delete/" + id,
+        rel: "delete_self_user",
+        type: "DELETE",
+      },
+    ];
+    return res
+      .status(200)
+      .json({ author: req.loggedUser, server: response, _link: HATEOAS });
   }
   res.status(404).json({ status_404 });
 });
 
 app.put("/update/:id", async (req, res) => {
-  const id = req.params.id;
+  var id = req.params.id;
 
   const response = await User.findOne({
     where: { id },
@@ -105,12 +130,30 @@ app.put("/update/:id", async (req, res) => {
   } else {
     return res.status(404).json({ status_404 });
   }
-
-  res.status(200).json({ author: req.loggedUser }, status_200[1]);
+  var HATEOAS = [
+    {
+      href: "http://localhost:2632/findall",
+      rel: "get_all_user",
+      type: "GET",
+    },
+    {
+      href: "http://localhost:2632/findone/" + id,
+      rel: "self_self_user",
+      type: "GET",
+    },
+    {
+      href: "http://localhost:2632/delete/" + id,
+      rel: "delete_self_user",
+      type: "DELETE",
+    },
+  ];
+  res
+    .status(200)
+    .json({ author: req.loggedUser, server: status_200[1], _link: HATEOAS });
 });
 
 app.delete("/delete/:id", userAuth, async (req, res) => {
-  const id = req.params.id;
+  var id = req.params.id;
 
   const response = await User.findOne({
     where: { id },
@@ -121,7 +164,22 @@ app.delete("/delete/:id", userAuth, async (req, res) => {
       where: { id },
     });
 
-    return res.status(200).json({ author: req.loggedUser }, status_200[2]);
+    var HATEOAS = [
+      {
+        href: "http://localhost:2632/save",
+        rel: "create_user",
+        type: "POST",
+      },
+      {
+        href: "http://localhost:2632/auth",
+        rel: "auth_user",
+        type: "POST",
+      },
+    ];
+
+    return res
+      .status(200)
+      .json({ author: req.loggedUser, server: status_200[2], _link: HATEOAS });
   }
 
   return res.status(404).json({ status_404 });
@@ -149,7 +207,31 @@ app.post("/auth", async (req, res) => {
           if (err) {
             res.status(500).json({ status_500 });
           } else {
-            res.status(200).json({ Token: token });
+            var id = response.id;
+            var HATEOAS = [
+              {
+                href: "http://localhost:2632/findall",
+                rel: "get_all_user",
+                type: "GET",
+              },
+              {
+                href: "http://localhost:2632/findone/" + id,
+                rel: "self_self_user",
+                type: "GET",
+              },
+              {
+                href: "http://localhost:2632/update/" + id,
+                rel: "update_self_user",
+                type: "PUT",
+              },
+              {
+                href: "http://localhost:2632/delete/" + id,
+                rel: "delete",
+                type: "DELETE",
+              },
+            ];
+
+            res.status(200).json({ Token: token, _link: HATEOAS });
           }
         }
       );
