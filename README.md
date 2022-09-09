@@ -7,7 +7,10 @@
 ```
 localhost:2632
 ```
-
+### Nome do Banco de Dados no MySQL
+```
+usuarios_senhas
+```
 ### POST /auth
 
 Endpoint primordial, utilizado para fazer o login no sistema, sem passar por ele você será incapaz de fazer qualquer outra requisição.
