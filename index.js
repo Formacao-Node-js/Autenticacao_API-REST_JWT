@@ -34,24 +34,32 @@ app.use(json());
 app.use(cors());
 
 /* ### ROUTES ###  */
-app.post("/save", async (req, res) => {
+app.post("/save", (req, res) => {
   const { username, email, password } = req.body;
 
   const reqFields = ["username", "email", "password"];
 
   for (const field of reqFields) {
     if (!req.body[field]) {
-      return res.status(400).json({ status_400 });
+      return res.status(400).json(status_400[1]);
     }
   }
 
-  await User.create({
-    username: username,
-    password: password,
-    email: email,
-  });
+  var salt = bcrypt.genSaltSync(10);
+  var hash = bcrypt.hashSync(password, salt);
+  // console.log(hash);
 
-  res.status(200).json(status_200[0]);
+  User.create({
+    email: email,
+    username: username,
+    password: hash,
+  })
+    .then(() => {
+      res.status(200).json(status_200[0]);
+    })
+    .catch((err) => {
+      res.status(400).json({ erro: err });
+    });
 });
 
 app.get("/findall", userAuth, async (req, res) => {

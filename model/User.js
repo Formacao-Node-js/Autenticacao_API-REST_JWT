@@ -16,7 +16,7 @@ const User = connection.define("users", {
   },
 
   password: {
-    type: Sequelize.STRING(55),
+    type: Sequelize.STRING(100),
     allowNull: false,
   },
 

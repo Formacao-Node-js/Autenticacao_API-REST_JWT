@@ -16,10 +16,20 @@ const status_200 = [
   ],
 ];
 
-const status_400 = {
-  err: "O id passado é do tipo texto.",
-  payload: "O id deve conter apenas número(s).",
-};
+const status_400 = [
+  [
+    {
+      err: "O id passado é do tipo texto.",
+      payload: "O id deve conter apenas número(s).",
+    },
+  ],
+  [
+    {
+      err: "Nenhum campo de cadastro pode ser enviado vazio",
+      payload: "Preencha todos os campos.",
+    },
+  ],
+];
 
 const status_401 = [
   [
