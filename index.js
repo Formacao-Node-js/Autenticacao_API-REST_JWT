@@ -34,7 +34,7 @@ app.use(json());
 app.use(cors());
 
 /* ### ROUTES ###  */
-app.post("/save", (req, res) => {
+app.post("/save", async (req, res) => {
   const { username, email, password } = req.body;
 
   const reqFields = ["username", "email", "password"];
@@ -49,17 +49,14 @@ app.post("/save", (req, res) => {
   var hash = bcrypt.hashSync(password, salt);
   // console.log(hash);
 
-  User.create({
+  await User.create({
     email: email,
     username: username,
     password: hash,
-  })
-    .then(() => {
-      res.status(200).json(status_200[0]);
-    })
-    .catch((err) => {
-      res.status(400).json({ erro: err });
-    });
+  }).catch((err) => {
+    res.status(400).json({ erro: err });
+  });
+  res.status(200).json(status_200[0]);
 });
 
 app.get("/findall", userAuth, async (req, res) => {
@@ -135,24 +132,30 @@ app.post("/auth", async (req, res) => {
   var { email, password } = req.body;
 
   const response = await User.findOne({
-    where: { email: email, password: password },
+    where: { email: email },
   });
 
   if (response != undefined) {
-    jwt.sign(
-      { email: response.email, id: response.id },
-      JWTKey,
-      {
-        expiresIn: "48hrs",
-      },
-      (err, token) => {
-        if (err) {
-          res.status(500).json({ status_500 });
-        } else {
-          res.status(200).json({ Token: token });
+    var validate = bcrypt.compareSync(password, response.password);
+
+    if (validate) {
+      jwt.sign(
+        { email: response.email, id: response.id },
+        JWTKey,
+        {
+          expiresIn: "48hrs",
+        },
+        (err, token) => {
+          if (err) {
+            res.status(500).json({ status_500 });
+          } else {
+            res.status(200).json({ Token: token });
+          }
         }
-      }
-    );
+      );
+    } else {
+      res.status(401).json(status_401[0]);
+    }
   } else {
     res.status(401).json(status_401[0]);
   }
